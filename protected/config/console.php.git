@@ -1,5 +1,5 @@
 <?php
-
+Yii::setPathOfAlias('Lib',dirname(__FILE__).DIRECTORY_SEPARATOR.'../lib');
 // This is the configuration for yiic console application.
 // Any writable CConsoleApplication properties can be configured here.
 return array(
