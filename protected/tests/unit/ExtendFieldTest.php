@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class ExtendFieldTest extends PHPUnit_Framework_TestCase {
+class ExtendFieldTest extends CDbTestCase {
     public function testOne()
     {
         $model = new \application\models\ContactForm();
