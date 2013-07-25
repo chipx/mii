@@ -1,5 +1,5 @@
 <?php
-namespace Lib\Models\Form;
+namespace application\Models;
 /**
  * ContactForm class.
  * ContactForm is the data structure for keeping

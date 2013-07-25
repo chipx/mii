@@ -51,7 +51,7 @@ class SiteController extends Controller
 	 */
 	public function actionContact()
 	{
-		$model=new \Lib\Models\Form\ContactForm();
+		$model=new \application\Models\ContactForm();
 		if(isset($_POST['ContactForm']))
 		{
 			$model->attributes=$_POST['ContactForm'];
