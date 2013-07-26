@@ -13,7 +13,7 @@ defined('YII_DEBUG') or define('YII_DEBUG',true);
 
 require_once($yii);
 Yii::createConsoleApplication($config);
-$migrate = new SchemaMigrate(Yii::app()->db, 'schema.mii.php');
+$migrate = new SchemaMigrate(Yii::app()->db, 'schema.mii');
 $migrate->compare();
 $migrate->save();
 
@@ -51,8 +51,8 @@ class SchemaMigrate {
     protected function prepareFileSchema()
     {
         echo $this->fileName.PHP_EOL;
-        if (file_exists($this->fileName)) {
-            $this->fileSchema = require_once($this->fileName);
+        if (file_exists($this->fileName.'.php')) {
+            $this->fileSchema = require_once($this->fileName.'.php');
         }
     }
 
@@ -137,8 +137,12 @@ class SchemaMigrate {
     public function save()
     {
 //        var_dump($this->log);
-        file_put_contents($this->fileName, "<?php \n return " . var_export($this->fileSchema, true) . ';');
+        file_put_contents($this->fileName.'.php', "<?php \n return " . var_export($this->fileSchema, true) . ';');
         if (!empty($this->log))
             file_put_contents($this->fileName.'.log', "[" . date('d.m.Y H:i:s') . "]\n" . implode(PHP_EOL, (array)$this->log) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->fileName.'.sql', '');
+        foreach ($this->fileSchema as $table) {
+            file_put_contents($this->fileName.'.sql', $table.';'.PHP_EOL, FILE_APPEND);
+        }
     }
 }
