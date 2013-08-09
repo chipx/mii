@@ -9,12 +9,17 @@
 
 class ContentTest extends CDbTestCase {
 
+    protected $fixtures = [
+        'content' => '\Lib\Models\Db\Content',
+        'content_fields' => '\Lib\Models\Db\ContentFields',
+    ];
+
     public function testCreate()
     {
-        $newContent = new \application\models\Content();
+        $newContent = new \Lib\Models\Db\Content();
         $newContent->title = 'Hello world';
         $newContent->body = 'Test body';
-        $newContent->state = \application\models\Content::STATE_PROTECTED;
+        $newContent->state = \Lib\Models\Db\Content::STATE_PROTECTED;
         $this->assertTrue($newContent->save());
 
         $this->assertTrue($newContent->id > 0);
@@ -27,5 +32,12 @@ class ContentTest extends CDbTestCase {
         $this->assertTrue(time() >= $updated);
 
         $this->assertEquals($newContent->created, $newContent->updated);
+    }
+
+    public function testExtendField()
+    {
+        $content = \Lib\Models\Db\Content::model()->find(1);
+        $this->assertInstanceOf('\Lib\Models\Db\Content', $content);
+        $this->assertEquals('dsfsdgsfwer  fgsfgsfg sfxb xvbxvberwretwer', $content->fields->icon);
     }
 }
