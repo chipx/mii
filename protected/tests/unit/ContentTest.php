@@ -40,4 +40,40 @@ class ContentTest extends CDbTestCase {
         $this->assertInstanceOf('\Lib\Models\Db\Content', $content);
         $this->assertEquals('dsfsdgsfwer  fgsfgsfg sfxb xvbxvberwretwer', $content->fields->icon);
     }
+
+    /**
+     * @expectedException Lib\Db\ExtendFieldsException
+     * @expectedExceptionCode 1
+     */
+    public function testFieldNotAllowed()
+    {
+        $content = \Lib\Models\Db\Content::model()->find(1);
+        $content->fields->rate = 35;
+    }
+
+    public function testInsertExtendField()
+    {
+        $content = \Lib\Models\Db\Content::model()->find(1);
+        $content->fields->rait = 35;
+        $this->assertEquals(35, $content->fields->rait);
+        $this->assertTrue($content->save());
+
+        $content = \Lib\Models\Db\Content::model()->find(1);
+        $this->assertEquals(35, $content->fields->rait);
+    }
+
+    public function testInsertUpdateExtendField()
+    {
+        $content = \Lib\Models\Db\Content::model()->find(1);
+        $content->fields->rait = 35;
+        $content->fields->icon = 'icon.ico';
+        $this->assertEquals(35, $content->fields->rait);
+        $this->assertEquals('icon.ico', $content->fields->icon);
+        $this->assertTrue($content->save());
+
+        $content = \Lib\Models\Db\Content::model()->find(1);
+        $this->assertEquals(35, $content->fields->rait);
+        $this->assertEquals('icon.ico', $content->fields->icon);
+    }
+
 }

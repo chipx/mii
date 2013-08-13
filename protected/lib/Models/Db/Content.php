@@ -25,7 +25,10 @@ class Content extends \CActiveRecord
         return [
             'fields' => [
                 'class' => '\Lib\Db\ExtendFields',
-                'allowedFields' => ['icon', 'rait']
+                'allowedFields' => ['icon', 'rait'],
+                'rules' => [
+                    ['rate', 'numerical', 'integerOnly' => true]
+                ]
             ]
         ];
     }
